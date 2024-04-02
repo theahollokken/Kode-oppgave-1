@@ -1,0 +1,38 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+#Definerer matrisen A(t) som er gitt i oppgaven
+def A(t):
+return np.array([[np.cos(t), np.cos(t) + np.sin(t)],[-np.sin(t), 0]])
+
+#Implementerer Eulers metode for å finne posisjonen til partikkelen over tid
+def euler_method(initial_position, time_step, total_time):
+t = 0
+position = np.array(initial_position)
+
+#Lager en liste for å holde styr på posisjonene
+positions = [position.tolist()]
+
+#Utfører iterasjonene
+while t < total_time:
+#Beregner hastigheten ved nåværende tidspunkt
+velocity = A(t) @ position
+
+#Oppdaterer posisjonen ved å legge til hastigheten multiplisert ved tidssteget
+position = position + time_step * velocity
+
+#Legger til den nye posisjonen i listen
+positions.append(position.tolist())
+
+#Øker tiden med tidssteget
+t += time_step
+
+return positions
+
+#Initialverdier
+initial_position = [1,0]
+time_step = 0.1 #Eksempelverdi, kan justeres
+total_time = 2 #Eksempelverdi, kan justeres ut ifra ønsket simulering
+
+#Kaller funksjonen og lagrer posisjonene
+positions = euler_method(initial_position, time_step, total_time)
